@@ -27,4 +27,6 @@ You`ll need : <br>
 
 
 # Changelog
-
+V1.1 <br>
+- Discord webhook added <br>
+- town restrictions added <br>
