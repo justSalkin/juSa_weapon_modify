@@ -1,4 +1,9 @@
 Config = {}
+Config.DiscordWebhook = "" --put your webhook here
+Config.DiscordBotName = "juSa Weapon Modify"
+Config.DiscordAvatar = "https://i.postimg.cc/TYm9DdHT/jusa-scripts.png"
+
+Config.usewebhook = true
 
 Config.command = "SN_scratch" --command to open menu to choose a weapon
 
@@ -28,5 +33,29 @@ Config.Language = {
     --ItemModify
     strongItemSN = " illegible ",
     strongItemDesc = "The serial number has been made illegible.",
-    lightItemDesc = "The serial number got partially obscured."
+    lightItemDesc = "The serial number got partially obscured.",
+    --Notify
+    NotifyTitle = "Weapon Modify:",
+    inTown = "You are being watched. Better do it somewhere else.",
+    --Webhook
+    webhook_changed = "Changed the serial number from: ",
+    webhook_from = " from ",
+    webhook_to = " to "
+}
+------------------- Interaction -----------------
+Config.keys = {
+    G = 0x760A9C6F, -- talk/interact
+}
+------------------- Don't touch -----------------
+Config.Towns = {
+    { name = "Annesburg",  allowed = false },
+    { name = "Armadillo",  allowed = false },
+    { name = "Blackwater", allowed = false },
+    { name = "Lagras",     allowed = false },
+    { name = "Rhodes",     allowed = false },
+    { name = "StDenis",    allowed = false },
+    { name = "Strawberry", allowed = false },
+    { name = "Tumbleweed", allowed = false },
+    { name = "Valentine",  allowed = false },
+    { name = "Vanhorn",    allowed = false },
 }

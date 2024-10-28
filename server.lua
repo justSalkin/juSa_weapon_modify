@@ -66,6 +66,9 @@ end
 RegisterServerEvent("juSa_weapon_modify:removeWeaponSerial")
 AddEventHandler("juSa_weapon_modify:removeWeaponSerial", function(weaponId)
     local _source = source
+    local Character = VORPcore.getUser(_source).getUsedCharacter
+    local firstname = Character.firstname
+    local lastname = Character.lastname
 
     local hasLightItem = hasRequiredItem(_source, Config.LightItem)
     local hasStrongItem = hasRequiredItem(_source, Config.StrongItem)
@@ -101,6 +104,9 @@ AddEventHandler("juSa_weapon_modify:removeWeaponSerial", function(weaponId)
 
                     if success then
                         TriggerClientEvent("juSa_weapon_modify:notify", _source, weapon.label .. Config.Language.removedSN)
+                        if Config.usewebhook then
+                            VORPcore.AddWebhook(firstname.." "..lastname, Config.DiscordWebhook, Config.Language.webhook_changed .. weapon.label .. Config.Language.webhook_from .. weapon.serial_number .. Config.Language.webhook_to .. newSerialNumber, 1, Config.DiscordBotName, "", "", Config.DiscordAvatar)
+                        end
                     else
                         TriggerClientEvent("juSa_weapon_modify:notify", _source, Config.Language.errorRemove)
                     end

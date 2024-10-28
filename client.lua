@@ -1,23 +1,36 @@
 local VORPcore = {}
+local VORPInv = {}
+local progressbar = exports.vorp_progressbar:initiate()
+local Animations = exports.vorp_animations.initiate()
+local prompts = GetRandomIntInRange(0, 0xffffff)
 
 local PlayerIsRestricted = false
 local PlayerIsPermitted = false
+local towns = {}
 
 TriggerEvent("getCore", function(core)
     VORPcore = core
 end)
 
 RegisterCommand(Config.command, function()
-    if Config.applyJobSpecifications then
-        TriggerServerEvent("juSa_weapon_modify:checkJob") --checking if there are any restrictions
-        Wait(500)
-        if PlayerIsPermitted and not PlayerIsRestricted then
-            TriggerServerEvent("juSa_weapon_modify:getAllWeaponsForMenu") --get all weapons in players inv
+    if Config.useTownRestrictions then
+        towns = RegisterTownRestriction()
+        local restricted = isInRestrictedTown(towns, playerCoords)
+        if restricted then
+            TriggerEvent('vorp:NotifyLeft', Config.Language.NotifyTitle, Config.Language.inTown, "BLIPS", "blip_destroy", 4000, "COLOR_RED")
         else
-            VORPcore.NotifyRightTip(Config.Language.jobRestriction, 3000)
+            if Config.applyJobSpecifications then
+                TriggerServerEvent("juSa_weapon_modify:checkJob") --checking if there are any restrictions
+                Wait(500)
+                if PlayerIsPermitted and not PlayerIsRestricted then
+                    TriggerServerEvent("juSa_weapon_modify:getAllWeaponsForMenu") --get all weapons in players inv
+                else
+                    VORPcore.NotifyRightTip(Config.Language.jobRestriction, 3000)
+                end
+            else 
+                TriggerServerEvent("juSa_weapon_modify:getAllWeaponsForMenu") --get all weapons in players inv
+            end
         end
-    else 
-        TriggerServerEvent("juSa_weapon_modify:getAllWeaponsForMenu") --get all weapons in players inv
     end
 end, false)
 
@@ -58,3 +71,31 @@ AddEventHandler("juSa_weapon_modify:jobchecked", function(isrestricted, ispermit
         PlayerIsPermitted = true
     end
 end)
+
+function isInRestrictedTown(towns, playerCoords) --checks if player is in restricted arial
+    player_coords = playerCoords or GetEntityCoords(PlayerPedId())
+    local x, y, z = table.unpack(player_coords)
+    local town_hash = GetTown(x, y, z)
+    if town_hash == false then
+        return false
+    end
+    if towns[town_hash] then
+        return true
+    end
+    return false
+end
+
+function GetTown(x, y, z) --get map zone at this coords
+    return Citizen.InvokeNative(0x43AD8FC02B429D33, x, y, z, 1)
+end
+
+function RegisterTownRestriction() --checking towns from config
+    local towns = {}
+    for i, town in pairs(Config.Towns) do
+        if not town.allowed then
+            local town_hash = GetHashKey(town.name)
+            towns[town_hash] = town.name
+        end
+    end
+    return towns
+end
