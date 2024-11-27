@@ -4,7 +4,7 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 
 author 'justSalkin'
 description 'SN scratcher'
-version '1.1'
+version '1.2'
 
 client_scripts {
    'client.lua',

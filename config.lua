@@ -2,22 +2,23 @@ Config = {}
 Config.DiscordWebhook = "" --put your webhook here
 Config.DiscordBotName = "juSa Weapon Modify"
 Config.DiscordAvatar = "https://i.postimg.cc/TYm9DdHT/jusa-scripts.png"
-
 Config.usewebhook = true
 
 Config.command = "SN_scratch" --command to open menu to choose a weapon
+Config.useLocation = false --if true the command is disabled
+Config.useTownRestrictions = false --restricts command using in towns (see town settings in config)
 
-Config.applyJobSpecifications = false --set true if u want to permit or restrict players with/without jobs
+Config.applyJobSpecifications = true --set true if u want to permit or restrict players with/without jobs
 Config.jobRestriction = { --states that players with these jobs are not allowed to remove SN | leave blank if you do not want any restrictions
-    { name = "police", grade = 0 },
+    { name = "SheriffV", grade = 0 },
 }
 Config.jobPermission = { --specifies which job players need to remove SN | leave blank if you do not want any restrictions
-    { name = "blacksmith", grade = 3 },
+    --{ name = "SheriffV", grade = 0 },
 }
 
 Config.ItemNeeded = true -- set to true if players need item(s) to remove the SN
-Config.LightItem = {DBname = "rock" , Label = "Rock" , amount = 1, consumed = false } -- removes just part of the weapon SN (every 3. Number = /)
-Config.StrongItem = {DBname = "acid" , Label = "Acid" , amount = 1 , consumed = true } -- removes SN totaly
+Config.LightItem = {DBname = "rock" , Label = "Stein" , amount = 1, consumed = false } -- removes just part of the weapon SN
+Config.StrongItem = {DBname = "wisteria_tincture" , Label = "Blauregen Tinktur" , amount = 1 , consumed = true } -- removes SN totaly
 
 ------------------- TRANSLATE HERE --------------
 Config.Language = {
@@ -27,6 +28,7 @@ Config.Language = {
     removedSN = ": Serial number has been manipulated.",
     errorRemove = "Error removing the serial number.",
     jobRestriction = " Looks like you have the wrong job for this. ",
+    CommandRestriction = "You are not allowed to use this. Look elsewhere ...",
     --Menu
     title = "weapons list",
     SN = "Serial Number ",
@@ -40,7 +42,10 @@ Config.Language = {
     --Webhook
     webhook_changed = "Changed the serial number from: ",
     webhook_from = " from ",
-    webhook_to = " to "
+    webhook_to = " to ",
+    --prompts
+    press = "press ",
+    use = "Modify your weapon ..."
 }
 ------------------- Interaction -----------------
 Config.keys = {
@@ -58,4 +63,8 @@ Config.Towns = {
     { name = "Tumbleweed", allowed = false },
     { name = "Valentine",  allowed = false },
     { name = "Vanhorn",    allowed = false },
+}
+Config.Location = {
+    coords = vector3( 1249.79, 1154.76, 151.23),
+    radius = 5.0, --interaction radius
 }
