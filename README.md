@@ -24,6 +24,7 @@ Currently this script only works with VORP.
 You`ll need : <br>
 - ``vorp_core`` <br>
 - ``vorp_inventory`` <br>
+- ``vorp_menu`` <br>
 
 
 # Changelog
